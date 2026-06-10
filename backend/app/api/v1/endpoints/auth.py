@@ -85,14 +85,10 @@ async def _send_verification_email_safe(recipient: str, verify_url: str, expires
 
 
 def _token_for_response(request: Request, token: str) -> str:
-    if (request.headers.get("x-client-platform") or "").strip().lower() == "web":
-        return _WEB_COOKIE_SESSION_TOKEN
     return token
 
 
 def _refresh_for_response(request: Request, token: str) -> str | None:
-    if (request.headers.get("x-client-platform") or "").strip().lower() == "web":
-        return None
     return token
 
 
