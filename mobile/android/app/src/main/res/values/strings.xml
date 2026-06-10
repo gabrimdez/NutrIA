@@ -1,0 +1,9 @@
+<resources>
+  <string name="app_name">NutrIA</string>
+  <string name="expo_splash_screen_resize_mode" translatable="false">contain</string>
+  <string name="expo_splash_screen_status_bar_translucent" translatable="false">false</string>
+  <string name="health_rationale_title">Uso de Health Connect en NutrIA</string>
+  <string name="health_rationale_body">NutrIA utiliza Health Connect únicamente para leer tu número de pasos diarios y mostrarlos en la pantalla principal. Con ese dato estimamos las kcal gastadas por actividad y ajustamos tus objetivos nutricionales.\n\n• Solo leemos: Pasos.\n• No escribimos ningún dato en Health Connect.\n• No compartimos los datos con terceros; viajan cifrados a nuestros servidores y se asocian únicamente a tu cuenta.\n\nPuedes revocar el acceso en cualquier momento desde Ajustes → Salud y fitness → Health Connect → Acceso a datos → NutrIA.</string>
+  <string name="health_rationale_close">Cerrar</string>
+  <string name="widget_description">Calorías restantes del día</string>
+</resources>

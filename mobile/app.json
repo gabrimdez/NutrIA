@@ -1,0 +1,90 @@
+{
+  "expo": {
+    "name": "NutrIA",
+    "slug": "nutria",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "scheme": "nutria",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0F172A"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.siwebai.nutria",
+      "infoPlist": {
+        "NSAppTransportSecurity": {
+          "NSAllowsLocalNetworking": true
+        },
+        "NSBonjourServices": [
+          "_http._tcp"
+        ],
+        "NSLocalNetworkUsageDescription": "NutrIA necesita la red local para conectar con Metro en tu Mac al desarrollar (JavaScript).",
+        "NSHealthShareUsageDescription": "NutrIA lee tus pasos desde Apple Salud para mostrar tu actividad en el inicio.",
+        "NSPhotoLibraryUsageDescription": "NutrIA necesita acceso a tu galería para que puedas elegir tu foto de perfil o subir imágenes de comidas.",
+        "NSCameraUsageDescription": "NutrIA necesita acceso a la cámara para que puedas tomar fotos de tus comidas."
+      },
+      "appleTeamId": "X6J6WBAD3R"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0F172A"
+      },
+      "package": "com.nutria.app",
+      "allowBackup": false,
+      "usesCleartextTraffic": false,
+      "minSdkVersion": 26,
+      "blockedPermissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ]
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "minSdkVersion": 26,
+            "compileSdkVersion": 35,
+            "targetSdkVersion": 35
+          }
+        }
+      ],
+      "expo-router",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "NutrIA necesita acceso a tu galería para que puedas elegir tu foto de perfil o subir imágenes de comidas.",
+          "cameraPermission": "NutrIA necesita acceso a la cámara para que puedas tomar fotos de tus comidas."
+        }
+      ],
+      "expo-asset",
+      "expo-font",
+      "expo-secure-store",
+      "expo-apple-authentication",
+      "expo-web-browser",
+      "expo-notifications",
+      [
+        "expo-calendar",
+        {
+          "calendarPermission": "NutrIA necesita acceso al calendario para sincronizar tu plan de comidas semanal."
+        }
+      ],
+      "react-native-health-connect",
+      [
+        "react-native-health",
+        {
+          "healthSharePermission": "NutrIA lee tus pasos desde Apple Salud para mostrar tu actividad en el inicio."
+        }
+      ]
+    ]
+  }
+}

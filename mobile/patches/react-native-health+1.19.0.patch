@@ -1,0 +1,63 @@
+diff --git a/node_modules/react-native-health/index.js b/node_modules/react-native-health/index.js
+index 06e5105..30add53 100644
+--- a/node_modules/react-native-health/index.js
++++ b/node_modules/react-native-health/index.js
+@@ -1,14 +1,50 @@
+ import { Activities, Observers, Permissions, Units } from './src/constants'
++import { NativeModules, TurboModuleRegistry } from 'react-native'
+ 
+-const { AppleHealthKit } = require('react-native').NativeModules
++const ConstantsExport = {
++  Activities,
++  Observers,
++  Permissions,
++  Units,
++}
+ 
+-export const HealthKit = Object.assign({}, AppleHealthKit, {
+-  Constants: {
+-    Activities,
+-    Observers,
+-    Permissions,
+-    Units,
++function getNativeModule() {
++  const nm = NativeModules
++  const turbo =
++    typeof TurboModuleRegistry.get === 'function'
++      ? TurboModuleRegistry.get('AppleHealthKit')
++      : null
++  return turbo ?? nm.AppleHealthKit ?? nm.RCTAppleHealthKit
++}
++
++/**
++ * RN ≥0.76 + NA / bridgeless: leer nativo solo al llamar; TurboModuleRegistry + NativeModules.
++ * Junto con `polyfills-native-interop.js` (RN$TurboInterop) para exponer módulos RCT legacy.
++ */
++export const HealthKit = new Proxy(
++  { Constants: ConstantsExport },
++  {
++    get(_target, prop) {
++      if (prop === 'Constants') return ConstantsExport
++      if (typeof prop === 'symbol') return undefined
++      // Sin esto, cualquier `await` / `Promise.resolve(módulo)` ve `.then` como función y
++      // intenta enlazar una Promise → error "AppleHealthKit.then no está enlazado".
++      if (prop === 'then' || prop === 'catch' || prop === 'finally') {
++        return undefined
++      }
++      return function lazyNativeMethod(...args) {
++        const native = getNativeModule()
++        const fn = native?.[prop]
++        if (typeof fn !== 'function') {
++          throw new Error(
++            `[react-native-health] AppleHealthKit.${String(prop)} no está enlazado. ` +
++              'Confirma build iOS con RNAppleHealthKit y polyfill RN$TurboInterop en index.js.',
++          )
++        }
++        return fn.apply(native, args)
++      }
++    },
+   },
+-})
++)
+ 
+ module.exports = HealthKit

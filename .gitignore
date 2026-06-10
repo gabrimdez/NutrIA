@@ -1,0 +1,90 @@
+# --- Secretos y entorno (no subir credenciales) ---
+.env
+.env.*
+!.env.example
+*.pem
+*.p8
+*.p12
+*.key
+secrets.json
+
+# --- Python / backend ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+env/
+ENV/
+backend/venv312/
+backend/pylibs/
+backend/tmp/
+*.egg-info/
+.eggs/
+dist/
+build/
+*.egg
+.pytest_cache/
+pytest-cache-files-*/
+pytest-tmp/
+backend/.pytest-data/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.cover
+.hypothesis/
+
+# --- Node / Expo / React Native (mobile) ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+mobile/.npm-cache/
+
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Metro / bundler
+.metro-health-check*
+
+# Credenciales de firma móvil (nunca en el repo)
+*.jks
+*.keystore
+*.mobileprovision
+
+# Nativo generado por prebuild: en este repo no se versiona iOS (≈10k archivos: Pods, build, xcuserdata).
+# Android sí tiene archivos mínimos trackeados; iOS se regenera con `npx expo prebuild` / EAS.
+# mobile/android/
+mobile/ios/
+
+# --- Supabase CLI (local) ---
+.branches/
+.temp/
+
+# --- IDE y sistema ---
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# --- Uploads (avatares, etc.) ---
+uploads/
+
+# --- Logs y misc ---
+*.log
+logs/
+*.tmp
+*.temp

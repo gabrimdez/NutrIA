@@ -1,0 +1,57 @@
+-- Ampliación del catálogo para búsqueda y emparejado con planes IA (valores orientativos por 100 g)
+INSERT INTO food_catalog (name, name_es, category, provider, kcal_per_100g, protein_per_100g, carbs_per_100g, fat_per_100g, fiber_per_100g, is_verified) VALUES
+('Rabbit, raw', 'Conejo', 'protein_animal', 'generic', 114, 21.8, 0, 2.3, 0, true),
+('Lamb leg, lean raw', 'Pierna de cordero magra', 'protein_animal', 'generic', 134, 20.6, 0, 5.6, 0, true),
+('Duck breast, raw', 'Magret de pato', 'protein_animal', 'generic', 201, 19.7, 0, 13.9, 0, true),
+('Tuna canned in water', 'Atún en lata al natural', 'protein_animal', 'generic', 86, 19.0, 0, 0.8, 0, true),
+('Sardines canned in oil', 'Sardinas en aceite', 'protein_animal', 'generic', 208, 24.6, 0, 11.5, 0, true),
+('Mussels, cooked', 'Mejillones cocidos', 'protein_animal', 'generic', 86, 11.9, 3.7, 2.3, 0, true),
+('Anchovy canned', 'Anchoas en conserva', 'protein_animal', 'generic', 210, 28.9, 0, 9.7, 0, true),
+('Turkey mince, raw', 'Pavo picado', 'protein_animal', 'generic', 148, 19.6, 0, 7.7, 0, true),
+('Chicken thigh, skinless raw', 'Contramuslo de pollo sin piel', 'protein_animal', 'generic', 121, 18.7, 0, 4.8, 0, true),
+
+('Ricotta cheese', 'Requesón / ricotta', 'dairy', 'generic', 138, 11.3, 5.1, 7.9, 0, true),
+('Manchego cheese', 'Queso manchego', 'dairy', 'generic', 393, 23.7, 1.6, 32.8, 0, true),
+('Feta cheese', 'Queso feta', 'dairy', 'generic', 264, 14.2, 4.1, 21.3, 0, true),
+('Semi-skimmed milk', 'Leche semidesnatada', 'dairy', 'generic', 46, 3.3, 4.8, 1.6, 0, true),
+('Kefir plain', 'Kéfir natural', 'dairy', 'generic', 41, 3.3, 4.5, 1.0, 0, true),
+
+('Bulgur, dry', 'Bulgur', 'carbs_grain', 'generic', 342, 12.3, 75.9, 1.3, 12.5, true),
+('Barley, pearled raw', 'Cebada perlada', 'carbs_grain', 'generic', 352, 9.9, 77.7, 1.2, 15.6, true),
+('Buckwheat groats, raw', 'Trigo sarraceno', 'carbs_grain', 'generic', 343, 13.3, 71.5, 3.4, 10.0, true),
+('Corn tortilla', 'Tortilla de maíz', 'carbs_grain', 'generic', 218, 5.7, 45.0, 2.5, 6.0, true),
+('Whole wheat wrap', 'Tortilla wrap integral', 'carbs_grain', 'generic', 262, 8.7, 43.0, 5.9, 8.0, true),
+('Rice cakes plain', 'Tortitas de arroz', 'carbs_grain', 'generic', 387, 8.2, 81.5, 2.8, 4.2, true),
+('Muesli no added sugar', 'Muesli sin azúcar añadido', 'carbs_grain', 'generic', 352, 10.0, 66.0, 6.0, 8.0, true),
+
+('Kidney beans, cooked', 'Judías pintas cocidas', 'protein_vegetal', 'generic', 127, 8.7, 22.8, 0.5, 6.4, true),
+('Green peas, cooked', 'Guisantes cocidos', 'vegetables', 'generic', 84, 5.4, 16.0, 0.2, 5.5, true),
+('Tempeh', 'Tempeh', 'protein_vegetal', 'generic', 192, 20.3, 7.6, 10.8, 5.1, true),
+('Seitan', 'Seitán', 'protein_vegetal', 'generic', 143, 24.0, 5.3, 1.7, 0.6, true),
+('Soy drink fortified', 'Bebida de soja enriquecida', 'dairy', 'generic', 38, 2.4, 1.8, 1.8, 0.6, true),
+('Oat drink', 'Bebida de avena', 'dairy', 'generic', 40, 0.3, 6.5, 1.5, 0.8, true),
+
+('Kale raw', 'Col kale', 'vegetables', 'generic', 35, 2.9, 4.4, 1.5, 4.1, true),
+('Arugula raw', 'Rúcula', 'vegetables', 'generic', 25, 2.6, 3.7, 0.7, 1.6, true),
+('Beetroot raw', 'Remolacha', 'vegetables', 'generic', 43, 1.6, 9.6, 0.2, 2.8, true),
+('Artichoke hearts', 'Alcachofas (corazones)', 'vegetables', 'generic', 47, 3.3, 10.5, 0.2, 5.4, true),
+('Cabbage white raw', 'Col blanca', 'vegetables', 'generic', 25, 1.3, 5.8, 0.1, 2.5, true),
+('Eggplant raw', 'Berenjena', 'vegetables', 'generic', 25, 1.0, 5.9, 0.2, 3.0, true),
+('Leek raw', 'Puerro', 'vegetables', 'generic', 61, 1.5, 14.2, 0.3, 1.8, true),
+('Celery raw', 'Apio', 'vegetables', 'generic', 14, 0.7, 3.0, 0.2, 1.6, true),
+
+('Grapes', 'Uvas', 'carbs_fruit', 'generic', 69, 0.7, 18.1, 0.2, 0.9, true),
+('Mango', 'Mango', 'carbs_fruit', 'generic', 60, 0.8, 15.0, 0.4, 1.6, true),
+('Melon', 'Melón', 'carbs_fruit', 'generic', 34, 0.8, 8.2, 0.2, 0.9, true),
+('Cherries', 'Cerezas', 'carbs_fruit', 'generic', 63, 1.1, 16.0, 0.2, 2.1, true),
+
+('Sunflower seeds', 'Pipas de girasol', 'fats_healthy', 'generic', 617, 20.8, 20.0, 51.5, 8.6, true),
+('Pumpkin seeds', 'Pipas de calabaza', 'fats_healthy', 'generic', 559, 30.2, 10.7, 49.0, 6.0, true),
+('Pistachios', 'Pistachos', 'fats_healthy', 'generic', 560, 20.2, 27.2, 45.3, 10.6, true),
+('Hazelnuts', 'Avellanas', 'fats_healthy', 'generic', 628, 15.0, 16.7, 60.8, 9.7, true),
+('Cashews', 'Anacardos', 'fats_healthy', 'generic', 553, 18.2, 30.2, 43.9, 3.3, true),
+
+('Turkey slices lean', 'Pavo lonchas finas', 'protein_animal', 'generic', 113, 22.0, 1.2, 2.0, 0, true),
+('Ham serrano lean', 'Jamón serrano', 'protein_animal', 'generic', 241, 30.0, 0, 13.0, 0, false),
+('Blood sausage cooked', 'Morcilla cocida', 'protein_animal', 'generic', 379, 14.6, 1.3, 35.0, 0, false),
+('Chorizo extra', 'Chorizo', 'protein_animal', 'generic', 455, 24.0, 2.0, 38.0, 0, false);
