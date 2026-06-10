@@ -105,6 +105,8 @@ def _require_csrf_token_pair(request: Request) -> None:
 
 def _set_auth_cookies(response: Response, access_token: str, refresh_token: str, remember_me: bool) -> None:
     secure = get_settings().environment.lower() == "production"
+    # cross-origin (frontend en dominio distinto): SameSite=None requiere Secure=True
+    samesite = "none" if secure else "lax"
     csrf_token = secrets.token_urlsafe(32)
     refresh_max_age = (
         PERSISTENT_REFRESH_COOKIE_DAYS * 24 * 60 * 60
@@ -117,7 +119,7 @@ def _set_auth_cookies(response: Response, access_token: str, refresh_token: str,
         max_age=ACCESS_TOKEN_MINUTES * 60,
         httponly=True,
         secure=secure,
-        samesite="lax",
+        samesite=samesite,
         path="/",
     )
     response.set_cookie(
@@ -126,7 +128,7 @@ def _set_auth_cookies(response: Response, access_token: str, refresh_token: str,
         max_age=refresh_max_age,
         httponly=True,
         secure=secure,
-        samesite="lax",
+        samesite=samesite,
         path="/",
     )
     response.set_cookie(
@@ -135,7 +137,7 @@ def _set_auth_cookies(response: Response, access_token: str, refresh_token: str,
         max_age=refresh_max_age,
         httponly=False,
         secure=secure,
-        samesite="lax",
+        samesite=samesite,
         path="/",
     )
 
