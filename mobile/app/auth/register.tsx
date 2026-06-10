@@ -108,9 +108,8 @@ export default function RegisterScreen() {
         password,
         display_name: name.trim() || null,
       });
-      const sessionToken = Platform.OS === 'web' ? WEB_COOKIE_SESSION_TOKEN : data.access_token;
-      await saveAuth(sessionToken, data.user, data.refresh_token ?? null);
-      useAuthStore.getState().setAuth(sessionToken, data.user, data.refresh_token ?? null);
+      await saveAuth(data.access_token, data.user, data.refresh_token ?? null);
+      useAuthStore.getState().setAuth(data.access_token, data.user, data.refresh_token ?? null);
       blurActiveElementOnWeb();
       router.replace('/onboarding');
     } catch (e) {

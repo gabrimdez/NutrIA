@@ -15,7 +15,7 @@ type AuthResponse = { access_token: string; refresh_token?: string | null; user:
 
 async function setToken(token: string): Promise<void> {
   if (Platform.OS === 'web') {
-    await AsyncStorage.setItem(TOKEN_KEY, WEB_COOKIE_SESSION_TOKEN);
+    await AsyncStorage.setItem(TOKEN_KEY, token);
     return;
   }
   try {
@@ -30,9 +30,7 @@ async function setToken(token: string): Promise<void> {
 async function getToken(): Promise<string | null> {
   if (Platform.OS === 'web') {
     const stored = await AsyncStorage.getItem(TOKEN_KEY);
-    if (stored === WEB_COOKIE_SESSION_TOKEN) return stored;
-    await AsyncStorage.multiRemove([TOKEN_KEY, LEGACY_TOKEN_KEY]);
-    return null;
+    return stored?.trim() || null;
   }
 
   const secureToken = await SecureStore.getItemAsync(TOKEN_KEY);
@@ -63,8 +61,8 @@ async function deleteToken(): Promise<void> {
 
 async function setRefreshToken(token: string | null | undefined): Promise<void> {
   if (Platform.OS === 'web') {
-    if (token) {
-      await AsyncStorage.setItem(REFRESH_TOKEN_KEY, WEB_COOKIE_SESSION_TOKEN);
+    if (token?.trim()) {
+      await AsyncStorage.setItem(REFRESH_TOKEN_KEY, token.trim());
     } else {
       await AsyncStorage.removeItem(REFRESH_TOKEN_KEY);
     }
@@ -88,7 +86,10 @@ async function setRefreshToken(token: string | null | undefined): Promise<void> 
 }
 
 async function getRefreshToken(): Promise<string | null> {
-  if (Platform.OS === 'web') return null;
+  if (Platform.OS === 'web') {
+    const token = await AsyncStorage.getItem(REFRESH_TOKEN_KEY);
+    return token?.trim() || null;
+  }
   const token = await SecureStore.getItemAsync(REFRESH_TOKEN_KEY);
   return token?.trim() || null;
 }
@@ -107,7 +108,7 @@ async function deleteRefreshToken(): Promise<void> {
 
 async function setStoredUser(user: StoredUser): Promise<void> {
   if (Platform.OS === 'web') {
-    await AsyncStorage.removeItem(LEGACY_USER_KEY);
+    await AsyncStorage.setItem(USER_KEY, JSON.stringify(user));
     return;
   }
   try {
@@ -121,7 +122,16 @@ async function setStoredUser(user: StoredUser): Promise<void> {
 }
 
 async function getStoredUser(): Promise<StoredUser | null> {
-  if (Platform.OS === 'web') return null;
+  if (Platform.OS === 'web') {
+    const raw = await AsyncStorage.getItem(USER_KEY);
+    if (!raw?.trim()) return null;
+    try {
+      const user = JSON.parse(raw) as StoredUser;
+      return user?.id ? user : null;
+    } catch {
+      return null;
+    }
+  }
 
   const rawSecure = await SecureStore.getItemAsync(USER_KEY);
   const raw = rawSecure?.trim() ? rawSecure : await AsyncStorage.getItem(LEGACY_USER_KEY);
@@ -174,18 +184,21 @@ export async function refreshAuth(): Promise<{ token: string; user: StoredUser; 
 
 export async function loadAuth(): Promise<{ token: string; user: StoredUser; refreshToken?: string | null } | null> {
   if (Platform.OS === 'web') {
+    const [token, raw, refreshToken] = await Promise.all([
+      getToken(),
+      getStoredUser(),
+      getRefreshToken(),
+    ]);
+    if (!token?.trim()) return refreshToken ? refreshAuth() : null;
     try {
-      const user = await authGet<StoredUser>('/api/v1/auth/session', WEB_COOKIE_SESSION_TOKEN);
-      if (!user?.id) return null;
-      await setToken(WEB_COOKIE_SESSION_TOKEN);
-      await deleteStoredUser();
-      return { token: WEB_COOKIE_SESSION_TOKEN, user };
+      const user = await authGet<StoredUser>('/api/v1/auth/session', token.trim());
+      if (user?.id) return { token: token.trim(), user, refreshToken };
     } catch (e) {
       if (e instanceof ApiError && e.status === 401) {
         return refreshAuth();
       }
-      return null;
     }
+    return raw?.id ? { token: token.trim(), user: raw, refreshToken } : null;
   }
 
   const [token, raw, refreshToken] = await Promise.all([

@@ -139,9 +139,8 @@ export default function LoginScreen() {
     setLoading(true);
     try {
       const data = await authPost<TokenResponse>('/api/v1/auth/login', { email, password, remember_me: rememberSession });
-      const sessionToken = Platform.OS === 'web' ? WEB_COOKIE_SESSION_TOKEN : data.access_token;
-      await saveAuth(sessionToken, data.user, data.refresh_token ?? null);
-      useAuthStore.getState().setAuth(sessionToken, data.user, data.refresh_token ?? null);
+      await saveAuth(data.access_token, data.user, data.refresh_token ?? null);
+      useAuthStore.getState().setAuth(data.access_token, data.user, data.refresh_token ?? null);
       blurActiveElementOnWeb();
       router.replace('/(tabs)');
     } catch (e) {
@@ -159,9 +158,8 @@ export default function LoginScreen() {
         remember_me: rememberSession,
         display_name: displayName,
       });
-      const sessionToken = Platform.OS === 'web' ? WEB_COOKIE_SESSION_TOKEN : data.access_token;
-      await saveAuth(sessionToken, data.user, data.refresh_token ?? null);
-      useAuthStore.getState().setAuth(sessionToken, data.user, data.refresh_token ?? null);
+      await saveAuth(data.access_token, data.user, data.refresh_token ?? null);
+      useAuthStore.getState().setAuth(data.access_token, data.user, data.refresh_token ?? null);
       blurActiveElementOnWeb();
       router.replace('/(tabs)');
     } catch (e) {
