@@ -173,9 +173,8 @@ export async function refreshAuth(): Promise<{ token: string; user: StoredUser; 
   try {
     const data = await authPost<AuthResponse>('/api/v1/auth/refresh', refreshToken ? { refresh_token: refreshToken } : {});
     if (!data?.user?.id) return null;
-    const sessionToken = Platform.OS === 'web' ? WEB_COOKIE_SESSION_TOKEN : data.access_token;
-    await saveAuth(sessionToken, data.user, data.refresh_token ?? null);
-    return { token: sessionToken, user: data.user, refreshToken: data.refresh_token ?? null };
+    await saveAuth(data.access_token, data.user, data.refresh_token ?? null);
+    return { token: data.access_token, user: data.user, refreshToken: data.refresh_token ?? null };
   } catch {
     await Promise.all([deleteToken(), deleteRefreshToken(), deleteStoredUser()]);
     return null;
